@@ -11,17 +11,25 @@ Compass compass(I2C_ADD_Compass);
 // Pixy pixy(I2C_ADD_PIXY, 1, 2);
 bool IsInGame = false;
 elapsedMillis buttonDeadTime = 0;
+int rohComp;
+int offset;
+bool compr = false;
+unsigned char kp = 2;
+  
 
 void setup() {
-
+  
   pinMode(17, OUTPUT);
 
-  delay(500);
+
+  //delay(500);
   SetBoardLEDColor(LEFT, BLUE);
   SetBoardLEDColor(RIGHT, BLUE);
 
   CoRoSoN_Init();
   //pixy.Init();
+
+
 
   SetI2CLEDColor(I2C_MODULE_1, LEFT, RED);
   SetI2CLEDColor(I2C_MODULE_1, RIGHT, RED);
@@ -145,35 +153,98 @@ void standby() {
 //***theo begin***
 void rechts()
 {
-SetMotor(MOTOR_1, BACKWARD, 25);
+SetMotor(MOTOR_1, BACKWARD, 25);//geschwindigkeit verringern wenn ballsensor programm
 SetMotor(MOTOR_2, BACKWARD, 25);
 SetMotor(MOTOR_3, FORWARD, 49);
 }
 
 void links()
 {
-SetMotor(MOTOR_1, FORWARD, 25); 
+SetMotor(MOTOR_1, FORWARD, 25); //geschwindigkeit verringern wenn ballsensor programm
 SetMotor(MOTOR_2, FORWARD, 29);
 SetMotor(MOTOR_3, BACKWARD, 57);
 }
 
-void vorwarz()
+void vorwaerz()
 {
 SetMotor(MOTOR_1, BACKWARD, 50);
 SetMotor(MOTOR_2, FORWARD, 50);
+SetMotor(MOTOR_3, FORWARD, 0);
+}
+
+void rueckwaerts(){
+  SetMotor(MOTOR_1, FORWARD, 30);
+SetMotor(MOTOR_2, BACKWARD, 30);
+SetMotor(MOTOR_3, FORWARD, 0);
+}
+
+void turnLeft(int speed){
+   if (speed > 25){
+    speed = 25;
+  }else if(speed <6){
+  speed = 6;
+  }
+  SetMotor(MOTOR_1, FORWARD, speed);
+  SetMotor(MOTOR_2, FORWARD, speed);
+ SetMotor(MOTOR_3, FORWARD, speed);
+}
+
+void turnRight(int speed){
+   if (speed > 25){
+    speed = 25;
+  }else if(speed < 6){
+  speed = 6;
+  }
+  SetMotor(MOTOR_1, BACKWARD, speed);
+  SetMotor(MOTOR_2, BACKWARD, speed);
+  SetMotor(MOTOR_3, BACKWARD, speed);
 }
 //***theo end***
 
+void compaass(){ 
+  //This method corrects the robot so the front will always face the enemy goal
+  //Author: Theo
+//int comp1 = rohComp + 10;
+//int comp2 = rohComp - 10;
+ 
+  rohComp = ((int)compass.Angle());
+  int aktComp = (rohComp + offset) % 360;
+
+/*
+Serial.println(String("offset ")+ offset);
+Serial.println(String("aktComp ")+ aktComp);
+Serial.println(String("rohcomp ")+ rohComp);
+Serial.println();
+delay(1000);*/
+
+  if(aktComp > 195){
+    turnLeft((aktComp - 180)/ kp);//6 perfekter wert 
+    //Serial.println((aktComp - 180)/ kp);
+  }
+  else if(aktComp < 165){
+    turnRight(ABS(aktComp - 180) / kp);
+    //Serial.println(ABS(aktComp - 180)/ kp);
+  }
+  else if(aktComp <= 195 && aktComp >= 165){
+    vorwaerz();
+    }
+  
+}
+
 
 void game() {
+  
+//int lichtschranke = analogRead(4);//mit lightbarrier triggered austauschen
+//int schwellenwert_licht = 1000;
+if (compr == false){
+int rohComp2 = ((int) compass.Angle()); //theo
+  offset = (180 - rohComp2 +360) %360;
+compr = true;
+}
 
-int lichtschranke = analogRead(4);//mit lightbarrier triggered austauschen
-int schwellenwert_licht = 1000;
+compaass();
 
 
-
-/*SetMotor(MOTOR_1, BACKWARD, 25);
-SetMotor(MOTOR_2, BACKWARD, 25);*/
 
   // Game strategy
   //
@@ -185,23 +256,20 @@ SetMotor(MOTOR_2, BACKWARD, 25);*/
   
   //Motor Kabel mit schwarzer seite anschließen
   
-    /*if(ABS(irRing.BallDirection())  <= 5 && irRing.BallDirection() < 32){                                                                     //Wenn zwischen 5 und -5 geradeaus fahren
-       SetMotor(MOTOR_1, BACKWARD, 10);
-        SetMotor(MOTOR_2, FORWARD, 10);
-    } else if(irRing.BallDirection() > -5 && irRing.BallDirection() < 32 && irRing.BallDirection() > -30){                                   //Wenn größer als 30 und kleiner als -5 diago nach hinten links fahren
-    SetMotor(MOTOR_1, FORWARD, 10);
-    SetMotor(MOTOR_3, BACKWARD, 10);
-    } else if(irRing.BallDirection()> 5 && irRing.BallDirection()<= 30){                                                                     //Wenn kleiner gleich 30 und größer als 5 diago nach hinten links fahren
-         SetMotor(MOTOR_2, BACKWARD, 10);
-        SetMotor(MOTOR_3, FORWARD, 10);
-    } else if(irRing.BallDirection()> 30 || irRing.BallDirection() <= -30 ){                                                                                                  //                                                                                               
-          SetMotor(MOTOR_2, BACKWARD, 10);
-          SetMotor(MOTOR_3, FORWARD, 10);
-    } else if(irRing.BallDirection()== -32){                                                                                                 //Wenn Ball nich sieht fahr nach hinten
-            SetMotor(MOTOR_1, FORWARD, 10);
-            SetMotor(MOTOR_2, BACKWARD, 10);
+    /*if(ABS(irRing.BallDirection())  <= 8){                                                                     //Wenn zwischen 8 und -8 geradeaus fahren
+      vorwaerz();
+    } else if(irRing.BallDirection() < -8 && irRing.BallDirection() > -15){                                   //Wenn größer als 30 und kleiner als -8 diago nach links fahren
+    links();
+    } else if(irRing.BallDirection()> 8 && irRing.BallDirection()<= 15){                                                                     //Wenn kleiner gleich 30 und größer als nach rechts fahren
+         rechts();
+    } 
+    else if(irRing.BallDirection()== -32 || irRing.BallDirection() <= -15 && irRing.BallDirection() >= -23){
+            rueckwaerts();
+    } else if(irRing.BallDirection() > 15 && irRing.BallDirection() <= 23)  {                                                                                      //neue ruckwarts line wegen unubersichtlich
+    rueckwaerts();
+    } else if (irRing.BallDirection() < -23 && irRing.BallDirection() > -32 || irRing.BallDirection() > 23){
+      rechts();
     }*/
-
 
  /*Serial.println(analogRead(4));
  delay(200);*/
