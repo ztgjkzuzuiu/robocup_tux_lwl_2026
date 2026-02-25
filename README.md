@@ -8,7 +8,17 @@ Main PCB: Coroson Kit https://github.com/ItzJannis/CoRoSoN-Package_Draft
 US-Sensor: DFRobot URM09 Ultrasonic Sensor (Gravity-I2C) (V1.0) SKU SEN0304
 Side PCB: self designed to use multiple US-Sensors
 Ballsensor:
-Motor:
+Compass:
+Motors: Servo City SKU: 638358
+Dribbler Motor: GA16Y-050-CE
 
 Inovation:
-For the 2026 Season we try to turn with the ball and drive backwards into the opponent's goal.
+For the 2026 season, we are experimenting with a non-traditional gameplay strategy:
+
+-The robot maintains ball control while facing its own goal
+
+-It then drives backwards into the opponent’s goal
+
+-Opponent avoidance is handled using ultrasonic sensors for real-time spatial awareness
+
+-This strategy allows us to explore alternative control schemes, perception methods, and tactical decision-making beyond conventional RoboCup playstyles.
