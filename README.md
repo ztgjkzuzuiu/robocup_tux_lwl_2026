@@ -22,3 +22,5 @@ For the 2026 season, we are experimenting with a non-traditional gameplay strate
 -Opponent avoidance is handled using ultrasonic sensors for real-time spatial awareness
 
 -This strategy allows us to explore alternative control schemes, perception methods, and tactical decision-making beyond conventional RoboCup playstyles.
+
+For question pleas ask us at _@tux1lwl.anonaddy.com
