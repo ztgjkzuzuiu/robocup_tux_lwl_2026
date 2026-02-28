@@ -14,8 +14,8 @@ This repository documents the development of our 1vs1 lightweight autonomous rob
   Version 1.0, SKU SEN0304
 
 - **Side PCB:**  
-  Self-designed PCB for use with multiple ultrasonic sensors  
-  CAD files: `/CAD files/Side PCB.zip`
+  Self-designed PCB for use with multiple ultrasonic sensors
+  `/CAD files/Side PCB.zip`
 
 - **Ball Sensor:** Vishay TSSP6038TR
 
