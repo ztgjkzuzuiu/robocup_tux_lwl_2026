@@ -37,6 +37,9 @@ For the 2026 season, we are experimenting with a non-traditional gameplay strate
 
 -This strategy allows us to explore alternative control schemes, perception methods, and tactical decision-making beyond conventional RoboCup playstyles.
 
+## Achievements
+1st place berlin qualification  
+
 ## Contact
 
 For question please ask us at questions@tux1lwl.anonaddy.com
