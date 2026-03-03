@@ -10,7 +10,7 @@ This repository documents the development of our 1vs1 lightweight autonomous rob
 - **Main PCB:** Coroson Kit  
   https://github.com/ItzJannis/CoRoSoN-Package_Draft
 
-- **Ultrasonic Sensor:** DFRobot URM09 Ultrasonic Sensor (Gravity-I2C)  
+- **Ultrasonic Sensors:** DFRobot URM09 Ultrasonic Sensor (Gravity-I2C)  
   Version 1.0, SKU SEN0304
 
 - **Side PCB:**  
@@ -21,12 +21,12 @@ This repository documents the development of our 1vs1 lightweight autonomous rob
 
 - **Compass:** CMPS14
 
-- **Motors:** ServoCity, SKU 638358
+- **Drive Motors:** ServoCity, SKU 638358
 
 - **Dribbler Motor:** GA16Y-050-CE
 
 
-## Inovation
+## Inovations
 For the 2026 season, we are experimenting with a non-traditional gameplay strategy:
 
 -The robot maintains ball control while facing its own goal
@@ -42,4 +42,4 @@ For the 2026 season, we are experimenting with a non-traditional gameplay strate
 
 ## Contact
 
-For question please ask us at questions@tux1lwl.anonaddy.com
+For questions please ask us at questions@tux1lwl.anonaddy.com
